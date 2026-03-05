@@ -18,7 +18,7 @@ async function authUser(req, res, next) {
         req.user = decoded
         next()
     } catch (e) {
-        throw new ApiError(401, "Invalid or expired token: " + e.message)
+        throw new ApiError(401, "something went wrong while verify the user :-" + e.message)
 
     }
 }
