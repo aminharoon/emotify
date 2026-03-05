@@ -13,7 +13,6 @@ async function authUser(req, res, next) {
         if (isBlackListed) {
             throw new ApiError(401, "session expired, please login again")
         }
-
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN)
         req.user = decoded
         next()
