@@ -97,7 +97,7 @@ async function getMeController(req, res) {
 async function logoutController(req, res) {
     const token = req.cookies.AccessToken
     await userModel.findByIdAndUpdate(req.user._id, { $unset: { refreshToken: 1 } })
-    await redis.set(token, Date.now().toString())
+    await redis.set(token, Date.now().toString(), "EX", 60 * 60)
 
     const options = {
         httpOnly: true,
