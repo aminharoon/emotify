@@ -1,4 +1,4 @@
-const blackListModel = require("../models/blacklist.model")
+
 const userModel = require("../models/user.model")
 const ApiError = require("../utils/ApiError")
 const ApiResponse = require("../utils/ApiResponce")
