@@ -11,7 +11,7 @@ redis.on("connect", () => {
     console.log("server is connected to the redis ")
 })
 redis.on("error", () => {
-    console.error("something went wrong while connecting to the redis ", error.message)
+    console.log("something went wrong while connecting to the redis ", error.message)
 })
 
 

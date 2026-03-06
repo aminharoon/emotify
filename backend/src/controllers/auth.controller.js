@@ -2,6 +2,7 @@ const blackListModel = require("../models/blacklist.model")
 const userModel = require("../models/user.model")
 const ApiError = require("../utils/ApiError")
 const ApiResponse = require("../utils/ApiResponce")
+const redis = require("../config/cache")
 
 const genrateAccessAndRefreshToken = async (userID) => {
     try {
@@ -96,9 +97,8 @@ async function getMeController(req, res) {
 async function logoutController(req, res) {
     const token = req.cookies.AccessToken
     await userModel.findByIdAndUpdate(req.user._id, { $unset: { refreshToken: 1 } })
-    await blackListModel.create({
-        AccessToken: token
-    })
+    await redis.set(token, Date.now().toString())
+
     const options = {
         httpOnly: true,
         secure: true

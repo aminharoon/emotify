@@ -10,7 +10,7 @@ async function authUser(req, res, next) {
         throw new ApiError(401, "Please login")
     }
     try {
-        const isBlackListed = await blackListModel.findOne({ AccessToken: token })
+        const isBlackListed = await redis.get(token)
         if (isBlackListed) {
             throw new ApiError(401, "session expired, please login again")
         }
