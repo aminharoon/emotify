@@ -8,7 +8,7 @@ const redis = new Redis({
 
 
 redis.on("connect", () => {
-    console.log("server is connected to the redis ")
+    console.log("server is connected to the redis successfully  ")
 })
 redis.on("error", () => {
     console.log("something went wrong while connecting to the redis ", error.message)
