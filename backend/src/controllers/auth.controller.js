@@ -62,7 +62,9 @@ async function loginController(req, res) {
             throw new ApiError(400, "invalid credentials")
         }
         const { AccessToken, RefreshToken } = await genrateAccessAndRefreshToken(user._id)
-        const loggedUser = await userModel.findOne({ username }).select('-password -refreshToken')
+
+
+        const loggedUser = await userModel.findById(user._id).select('-password -refreshToken')
         const options = {
             httpOnly: true,
             secure: true

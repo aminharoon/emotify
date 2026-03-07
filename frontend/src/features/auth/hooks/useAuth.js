@@ -4,35 +4,35 @@ import { getMe, Login, logout, register } from "../services/auth.api"
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
-    const { setUser, setLoading, loading } = context
+    const { setUser, setLoading, loading, user } = context
 
     const handleLogin = async ({ username, email, password }) => {
         setLoading(true)
         const data = await Login({ username, email, password })
-        setUser(data.user)
+        setUser(data.data)
         setLoading(false)
     }
 
     const handleRegister = async ({ username, email, password }) => {
         setLoading(true)
         const data = await register({ username, email, password })
-        setUser(data.user)
+        setUser(data.data)
         setLoading(false)
     }
     const handleGetMe = async () => {
         setLoading(true)
         const data = await getMe()
-        setUser(data.user)
+        setUser(data.data)
         setLoading(false)
     }
     const handleLogout = async () => {
         setLoading(true)
         const data = await logout()
-        setUser(data.user)
+        setUser(null)
         setLoading(false)
     }
     return ({
-        handleRegister, handleLogin, handleGetMe, handleLogout
+        handleRegister, handleLogin, handleGetMe, handleLogout, user, loading
     })
 
 
