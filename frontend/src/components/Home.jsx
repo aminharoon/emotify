@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
+import { useAuth } from "../features/auth/hooks/useAuth";
 
 const Home = () => {
+  const { laoding, user, handleLogout } = useAuth();
+  console.log(user);
   return (
     <div className=" bg-gradient-to-b from-slate-950 to-slate-900 px-4 py-16 text-slate-100">
       <div className="mx-auto max-w-4xl text-center">
@@ -10,7 +13,7 @@ const Home = () => {
           <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
             Welcome to{" "}
             <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
-              Moodify
+              Moodifym {user.username}
             </span>
           </h1>
 
@@ -20,12 +23,12 @@ const Home = () => {
           </p>
 
           <div className="pt-4">
-            <Link
-              to="/register"
-              className="inline-block rounded-lg bg-sky-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-sky-500"
+            <button
+              onClick={() => handleLogout()}
+              className="inline-block rounded-lg bg-red-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-red-500"
             >
-              Register
-            </Link>
+              logout
+            </button>
           </div>
         </div>
 

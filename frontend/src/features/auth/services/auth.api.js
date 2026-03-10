@@ -33,8 +33,13 @@ export const register = async ({ username, email, password }) => {
 }
 
 export const getMe = async () => {
-    const res = await api.get("/get-me")
-    return res.data
+    try {
+        const res = await api.get("/get-me")
+        return res.data
+    } catch (e) {
+        console.log("something went wrong while fetching the user ", e.message)
+
+    }
 }
 export const logout = async () => {
     try {

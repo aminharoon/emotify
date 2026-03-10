@@ -15,13 +15,6 @@ const Login = () => {
     await handleLogin({ email, password });
     navigate("/");
   };
-  if (loading) {
-    return (
-      <main>
-        <h1>Loading.....</h1>
-      </main>
-    );
-  }
 
   return (
     <section className=" rounded-xl bg-slate-950 px-4 py-10 text-slate-100">
