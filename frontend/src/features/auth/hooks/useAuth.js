@@ -32,8 +32,8 @@ export const useAuth = () => {
         setLoading(false)
     }
     useEffect(() => {
-        // handleGetMe()
-    }, [])
+        handleGetMe()
+    }, [setUser])
     return ({
         handleRegister, handleLogin, handleGetMe, handleLogout, user, loading
     })
