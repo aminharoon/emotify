@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  handleDetectClick,
-  handleDisableClick,
-  setupExpressionLifecycle,
-} from "../utils/expressionHandlers";
+import { detect, init } from "../utils/face.utils";
 
 export default function FaceExpression({ onClick = () => {} }) {
   const videoRef = useRef(null);
@@ -13,8 +9,24 @@ export default function FaceExpression({ onClick = () => {} }) {
   const [expression, setExpression] = useState("Detecting...");
 
   useEffect(() => {
-    return setupExpressionLifecycle({ landmarkerRef, streamRef, videoRef });
+    init({ landmarkerRef, videoRef, streamRef });
+
+    return () => {
+      if (landmarkerRef.current) {
+        landmarkerRef.current.close();
+      }
+
+      if (videoRef.current?.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+      }
+    };
   }, []);
+
+  async function handleClick() {
+    const expression = detect({ landmarkerRef, videoRef, setExpression });
+    console.log(expression);
+    onClick(expression);
+  }
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -23,33 +35,12 @@ export default function FaceExpression({ onClick = () => {} }) {
         style={{ width: "400px", borderRadius: "12px" }}
         playsInline
       />
-      <h2 className="text-2xl font-bold   ">{expression}</h2>
+      <h2>{expression}</h2>
       <button
-        className="bg-green-500 py-2 px-3 rounded  text-black text-xl font-bold"
-        onClick={() =>
-          handleDetectClick({
-            landmarkerRef,
-            streamRef,
-            videoRef,
-            setExpression,
-            onClick,
-          })
-        }
+        className="py-3 px-4 bg-green-500 rounded  font-xl text-black"
+        onClick={handleClick}
       >
         Detect expression
-      </button>
-      <button
-        className="bg-red-500 py-2 px-3 rounded  text-black text-xl font-bold ml-3"
-        onClick={() =>
-          handleDisableClick({
-            landmarkerRef,
-            streamRef,
-            videoRef,
-            setExpression,
-          })
-        }
-      >
-        stop Detect
       </button>
     </div>
   );
