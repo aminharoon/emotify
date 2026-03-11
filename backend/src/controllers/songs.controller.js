@@ -15,14 +15,15 @@ const uploadSongController = async (req, res) => {
         storageService.uploadFile({
             buffer: songBuffer,
             fileName: tags.title + ".mp3",
-            folder: "/cohort-2/moodify/songs"
+            folder: "/moodify/songs"
         }),
         storageService.uploadFile({
             buffer: tags?.image?.imageBuffer,
             fileName: tags.title + ".jpeg",
-            folder: "/cohort-2/moodify/posters"
+            folder: "/moodify/posters"
         })
     ])
+
     const song = await songModel.create({
         tittle: tags.title,
         songUrl: songFile.url,
@@ -38,6 +39,18 @@ const uploadSongController = async (req, res) => {
 
 }
 
+const getSong = async (req, res) => {
+    const { mood } = req.query
+
+    const count = await songModel.countDocuments({ mood });
+    const random = Math.floor(Math.random() * count);
+    const song = await songModel.findOne({ mood }).skip(random)
+    return res
+        .status(200)
+        .json(new ApiResponce(200, `song based on ${mood}`, song))
+}
+
 module.exports = {
-    uploadSongController
+    uploadSongController,
+    getSong
 }
