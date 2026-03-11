@@ -28,7 +28,6 @@ const uploadSongController = async (req, res) => {
         songUrl: songFile.url,
         posterUrl: posterFile.url,
         mood
-
     })
 
 
