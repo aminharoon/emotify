@@ -17,10 +17,11 @@ app.use(cors({
  */
 
 const authRouter = require("./routes/auth.routes")
-
+const songRouter = require("./routes/song.routes")
 
 
 app.use("/api/auth", authRouter)
+app.use("/api/songs", songRouter)
 
 
 
