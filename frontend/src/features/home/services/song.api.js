@@ -16,3 +16,17 @@ export const getSong = async ({ mood }) => {
 
     }
 }
+
+export const uploadSong = async ({ mood, song }) => {
+    try {
+        const formData = new FormData()
+        formData.append("mood", mood)
+        formData.append("song", song)
+
+        const res = await api.post("songs", formData)
+        return res.data?.data
+    } catch (e) {
+        console.log("something went wrong while uploading the song", e.message)
+        throw e
+    }
+}
